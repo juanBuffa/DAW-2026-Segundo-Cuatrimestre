@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { EstadosTareasEnum } from "../enums/estados-tareas.enum.js";
-import { Proyecto } from "./proyecto.entity.js";
+import type { Proyecto } from "./proyecto.entity.js";
 
 @Entity({ name: "tareas" })
 export class Tarea {
@@ -17,7 +17,7 @@ export class Tarea {
     @Column({ name: 'id_proyecto' })
     idProyecto: number
 
-    @ManyToOne(() => Proyecto)
+    @ManyToOne("Proyecto")
     @JoinColumn({ name: "id_proyecto" })
     proyecto: Proyecto
 

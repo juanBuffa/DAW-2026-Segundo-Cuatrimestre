@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { EstadosProyectosEnum } from "../enums/estados-proyectos.enum.js";
-import { Cliente } from "./cliente.entity.js";
-import { Tarea } from "./tarea.entity.js";
+import type { Cliente } from "./cliente.entity.js";
+import type { Tarea } from "./tarea.entity.js";
 
 @Entity({ name: 'proyectos' })
 export class Proyecto {
@@ -18,11 +18,11 @@ export class Proyecto {
     @Column({ name: "id_cliente" })
     idCliente: number
 
-    @ManyToOne(() => Cliente)
+    @ManyToOne("Cliente")
     @JoinColumn({ name: "id_cliente" })
     cliente: Cliente
 
-    @OneToMany(() => Tarea, (tarea) => tarea.proyecto)
+    @OneToMany("Tarea", (tarea: Tarea) => tarea.proyecto)
     tareas: Tarea[]
 
 }
