@@ -14,7 +14,7 @@ export class Cliente {
     @Column({ type: 'enum', enum: EstadosClientesEnum })
     estado: EstadosClientesEnum
 
-    @OneToMany("Proyecto", (proyecto: Proyecto) => proyecto.cliente)
+    @OneToMany(("Proyecto"), (proyecto: Proyecto) => proyecto.cliente)
     proyectos: Proyecto[]
 }
 

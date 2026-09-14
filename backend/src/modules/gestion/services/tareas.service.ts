@@ -1,18 +1,17 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Tarea } from "../entities/tarea.entity.js";
 import { Repository } from "typeorm";
-import { CreateClienteDto } from "../dtos/input/create-cliente.dto.js";
 import { CreateTareaDto } from "../dtos/input/create-tarea.dto.js";
 import { EstadosTareasEnum } from "../enums/estados-tareas.enum.js";
 import { UpdateTareaDto } from "../dtos/input/update-tarea.dto.js";
 
 @Injectable()
-export class TareaService {
+export class TareasService {
 
     constructor(@InjectRepository(Tarea) private readonly repository: Repository<Tarea>) { }
 
-    async crearTarea(idProyecto: number, dto: CreateTareaDto): Promise<{ id: number }>{
+    async crearTarea(idProyecto: number, dto: CreateTareaDto): Promise<{ id: number }> {
 
         const tarea: Tarea = this.repository.create(dto);
 
@@ -26,11 +25,21 @@ export class TareaService {
 
     }
 
-    async editarTarea(idTarea: number, dto: UpdateTareaDto): Promise<void>{
-        
-        const tarea: Tarea = this.repository.findOne({
-            
+    async editarTarea(idTarea: number, dto: UpdateTareaDto): Promise<void> {
+
+        const tarea: Tarea | null = await this.repository.findOne({
+            where: {
+                id: idTarea
+            }
         });
+
+        if (!tarea){
+            throw new BadRequestException("La tarea indicada no existe");
+        }
+
+        this.repository.merge(tarea, dto);
+
+        await this.repository.save(tarea);
 
     }
 
