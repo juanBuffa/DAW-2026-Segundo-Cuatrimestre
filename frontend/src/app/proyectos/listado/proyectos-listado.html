@@ -1,0 +1,34 @@
+<app-template>
+    <p-button id="boton-crear-proyecto" icon="pi pi-plus" label="Crear Proyecto" (click)="crearProyecto()"></p-button>
+    <p-table id="tabla" [value]="proyectos()" [tableStyle]="{ 'min-width': '50rem'}" [scrollable]="true"
+        scrollHeight="70vh">
+        <ng-template #header>
+            <tr>
+                <th>Nombre</th>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-proyecto>
+            <tr>
+                <td>{{ proyecto.nombre }}</td>
+                <td>{{ proyecto.cliente.nombre }}</td>
+                <td>{{ proyecto.estado }}</td>
+                <td>
+                    <p-button id="boton-gestionar-tareas" icon="pi pi-list" pTooltip="Gestionar Tareas"
+                        (click)="gestionarTareas(proyecto)"></p-button>
+                    <p-button icon="pi pi-pencil" pTooltip="Editar Proyecto"
+                        (click)="editarProyecto(proyecto)"></p-button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template #emptymessage>
+            <tr>
+                <td colspan="4">No se encontraron proyectos.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</app-template>
+<app-gestion-proyecto [(visible)]="dialogVisible"
+    [(proyectoSeleccionado)]="proyectoSeleccionado"></app-gestion-proyecto>
