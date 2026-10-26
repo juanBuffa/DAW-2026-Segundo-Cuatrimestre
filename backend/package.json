@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "build": "nest build",
-    "deploy": "nest deploy",
+    "deploy": "npm install && npm run build && pm2 startOrRestart ecosystem.config.json && pm2 save",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "compodoc": "npx compodoc -p tsconfig.json -d documentation -s --port 8081",
     "start": "nest start",
